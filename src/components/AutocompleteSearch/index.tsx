@@ -41,26 +41,34 @@ export default function AutoComplete() {
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'ArrowDown') {
+        // Move highlight down the list
         setHighlightedIndex((prev) => {
+          // If no option is highlighted or at the last option, go to the first option
           if (prev === null || prev === fetchedOptions.length - 1) {
             return 0;
           }
+          // Move to the next option
           return prev + 1;
         });
       } else if (event.key === 'ArrowUp') {
+        // Move highlight up the list
         setHighlightedIndex((prev) => {
+          // If no option is highlighted or at the first option, go to the last option
           if (prev === null || prev === 0) {
             return fetchedOptions.length - 1;
           }
+          // Move to the previous option
           return prev - 1;
         });
       } else if (event.key === 'Enter' && highlightedIndex !== null) {
+        // When Enter is pressed, select the highlighted option
         setQuery(fetchedOptions[highlightedIndex].label);
-        // Reset options and highlighted substring
+        // Reset options and highlighted index
         setOptions([]);
         setHighlightedIndex(null);
       }
     },
+    // Dependencies for the function to update when these values change
     [highlightedIndex, fetchedOptions],
   );
 
@@ -95,8 +103,6 @@ export default function AutoComplete() {
     },
     [query],
   );
-
-  console.log(options, query);
 
   return (
     <div className="autocomplete-wrapper">
