@@ -15,3 +15,7 @@ interface Character {
   relatives: Relative[];
   episodes: string[];
 }
+interface Relative {
+  url: string;
+  relation: string;
+}
