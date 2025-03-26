@@ -1,5 +1,5 @@
 import './App.css';
-import AutoComplete from './components/AutocompleteSearch';
+import AutocompleteSearch from './components/AutocompleteSearch';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         Search for your favorite South Park characters.
       </p>
 
-      <AutoComplete />
+      <AutocompleteSearch />
     </>
   );
 }
