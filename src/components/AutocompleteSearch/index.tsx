@@ -1,7 +1,7 @@
 import { useState, useCallback, useTransition } from 'react';
 import './styles.css';
 
-import useFetchOptions from './hooks/useFetchOptions';
+import useFetchOptions from '../../hooks/useFetchOptions';
 import { Option } from '../../types/Global';
 
 export default function AutoComplete() {
@@ -116,7 +116,11 @@ export default function AutoComplete() {
       />
 
       {fetchedOptions.length > 0 ? (
-        <ul className="autocomplete-options">
+        <ul
+          className={`autocomplete-options ${
+            options.length === 0 ? 'hidden-options' : ''
+          }`}
+        >
           {options.map((option, index) => (
             <li
               key={option.id}

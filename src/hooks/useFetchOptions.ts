@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Option } from '../../../types/Global';
+import { Option } from '../types/Global';
 
 const useFetchOptions = (query: string) => {
   const [fetchedOptions, setFetchedOptions] = useState<Option[]>([]);

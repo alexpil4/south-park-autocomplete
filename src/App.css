@@ -13,8 +13,12 @@
   margin-bottom: 1rem;
 }
 
-.highlight {
-  color: #e48c21;
+.highlight-primary {
+  color: #e2383f;
+}
+
+.highlight-secondary {
+  color: #59c0d5;
 }
 
 .description {
