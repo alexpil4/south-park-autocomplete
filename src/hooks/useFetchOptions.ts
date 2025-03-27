@@ -7,7 +7,8 @@ const useFetchOptions = (query: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!query) return;
+    // Norequest if the query is empty or with blank spaces
+    if (query.trim().length === 0) return;
 
     const fetchOptions = async () => {
       setLoading(true);

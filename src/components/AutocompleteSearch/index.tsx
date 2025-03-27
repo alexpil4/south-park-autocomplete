@@ -43,38 +43,41 @@ export default function AutoComplete() {
       if (event.key === 'ArrowDown') {
         // Move highlight down the list
         setHighlightedIndex((prev) => {
-          // If no option is highlighted or at the last option, go to the first option
-          if (prev === null || prev === fetchedOptions.length - 1) {
+          if (prev === null || prev >= options.length - 1) {
+            // Back to the first element if bottom list is reached or no selected option
             return 0;
           }
-          // Move to the next option
+          // Go to next option
           return prev + 1;
         });
       } else if (event.key === 'ArrowUp') {
         // Move highlight up the list
         setHighlightedIndex((prev) => {
-          // If no option is highlighted or at the first option, go to the last option
-          if (prev === null || prev === 0) {
-            return fetchedOptions.length - 1;
+          if (prev === null || prev <= 0) {
+            // Back to the last element if top list is reached or no selected option
+            return options.length - 1;
           }
-          // Move to the previous option
+          // Go to previous option
           return prev - 1;
         });
       } else if (event.key === 'Enter' && highlightedIndex !== null) {
-        // When Enter is pressed, select the highlighted option
-        setQuery(fetchedOptions[highlightedIndex].label);
-        // Reset options and highlighted index
-        setOptions([]);
-        setHighlightedIndex(null);
+        // If exists the highlighted option, select it
+        const selectedOption = options[highlightedIndex];
+        if (selectedOption) {
+          setQuery(selectedOption.label);
+
+          // Reset options and highlighted substring
+          setOptions([]);
+          setHighlightedIndex(null);
+        }
       }
     },
-    // Dependencies for the function to update when these values change
-    [highlightedIndex, fetchedOptions],
+    [highlightedIndex, options],
   );
 
-  const handleOptionClick = () => {
-    if (highlightedIndex !== null)
-      setQuery(fetchedOptions[highlightedIndex].label);
+  const handleOptionClick = (selectedOption: Option) => {
+    if (highlightedIndex !== null) setQuery(selectedOption.label);
+
     // Reset options and highlighted substring
     setOptions([]);
     setHighlightedIndex(null);
@@ -93,7 +96,9 @@ export default function AutoComplete() {
             .split(regex)
             .map((part, index) =>
               part.toLowerCase() === query.toLowerCase() ? (
-                <strong key={index}>{part}</strong>
+                <strong key={index} className="highlight-match">
+                  {part}
+                </strong>
               ) : (
                 part
               ),
@@ -127,7 +132,7 @@ export default function AutoComplete() {
               style={{
                 background: highlightedIndex === index ? '#f0f0f0' : 'white',
               }}
-              onClick={handleOptionClick}
+              onClick={() => handleOptionClick(option)}
               onMouseEnter={() => setHighlightedIndex(index)}
               onMouseLeave={() => setHighlightedIndex(null)}
             >
